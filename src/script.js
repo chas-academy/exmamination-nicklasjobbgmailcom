@@ -73,7 +73,7 @@ function renderTransaction() {
     // lägg till inkomster i listan
     for (let income of incomes) {
         const li = document.createElement("li"); // skapa ett nytt list element
-        li.textContent = `${income.description}: ${income.amount} kr`;
+        li.textContent = `${income.description}: ${income.amount} kr [Inkomst]`;
         incomeList.appendChild(li); // lägg till list elementet i income listan
         
         const liTotal = document.createElement("li"); // skapa ett nytt list element
@@ -84,7 +84,7 @@ function renderTransaction() {
         // lägg till utgifter i listan
     for (let expense of expenses) {
         const li = document.createElement("li"); // skapa ett nytt list element
-        li.textContent = `${expense.description}: ${expense.amount} kr`;
+        li.textContent = `${expense.description}: ${expense.amount} kr [Utgift]`;
         expenseList.appendChild(li); // lägg till list elementet i expense listan
         
         const liTotal = document.createElement("li"); // skapa ett nytt list element
