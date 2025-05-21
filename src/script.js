@@ -35,7 +35,11 @@ function addTransaction(type) {
     }
     
     // skapa ett objekt för transaktionen
-    const transaction = { description, amount, type };
+    const transaction = { 
+        description, 
+        amount, 
+        type 
+    };
 
     // lägg till transaktionen i rätt array beroende på typ
     if (type === "income") {
@@ -53,6 +57,7 @@ function addTransaction(type) {
     
     
     renderTransaction();
+    //updateBalance(); // uppdatera saldo
 }
 
 // ========================================
@@ -60,12 +65,11 @@ function addTransaction(type) {
 // ========================================
 
 function renderTransaction() {
-    // rensa listorna innan vi lägger till nya transaktioner
-    incomeList.innerHTML = "";
-    expenseList.innerHTML = "";
-    transactionList.innerHTML = "";
+    expenseList.innerHTML = ""; // rensa expense listan
+    transactionList.innerHTML = ""; // rensa transaction listan
     
     // lägg till inkomster i listan
+    incomeList.innerHTML = ""; // rensa income listan
     for (let income of incomes) {
         const li = document.createElement("li"); // skapa ett nytt list element
         li.textContent = `${income.description}: ${income.amount} kr`;
@@ -88,6 +92,7 @@ function renderTransaction() {
     }
 
     updateBalance(); // uppdatera saldo
+
 }
 // =========================================
 // RÄKNA UT OCH UPPDATERA SALDO
