@@ -57,7 +57,6 @@ function addTransaction(type) {
     
     
     renderTransaction();
-    //updateBalance(); // uppdatera saldo
 }
 
 // ========================================
@@ -65,11 +64,13 @@ function addTransaction(type) {
 // ========================================
 
 function renderTransaction() {
-    expenseList.innerHTML = ""; // rensa expense listan
+    if (!incomeList || !expenseList || !transactionList) return; // avsluta om elementen inte finns
+
     transactionList.innerHTML = ""; // rensa transaction listan
-    
-    // lägg till inkomster i listan
     incomeList.innerHTML = ""; // rensa income listan
+    expenseList.innerHTML = ""; // rensa expense listan
+
+    // lägg till inkomster i listan
     for (let income of incomes) {
         const li = document.createElement("li"); // skapa ett nytt list element
         li.textContent = `${income.description}: ${income.amount} kr`;
@@ -80,7 +81,7 @@ function renderTransaction() {
         transactionList.appendChild(liTotal); // lägg till list elementet i transaktionslistan
     }
     
-    // lägg till utgifter i listan
+        // lägg till utgifter i listan
     for (let expense of expenses) {
         const li = document.createElement("li"); // skapa ett nytt list element
         li.textContent = `${expense.description}: ${expense.amount} kr`;
@@ -99,6 +100,7 @@ function renderTransaction() {
 // =========================================
 
 function updateBalance() {
+    if (!balanceDisplay) return;
     const totalIncome = incomes.reduce((sum, item) => sum + item.amount, 0); // summera inkomster
     const totalExpenses = expenses.reduce((sum, item) => sum + item.amount, 0); // summera utgifter
     const balance = totalIncome - totalExpenses; // räkna ut saldo
