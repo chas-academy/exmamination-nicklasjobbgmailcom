@@ -27,10 +27,16 @@ const balanceDisplay = document.getElementById("balance"); // element för saldo
 function addTransaction(type) {
     const description = descInput.value.trim(); // hämta beskrivning
     const amount = parseFloat(amountInput.value); // hämta belopp
+
+    // kontrollera om beskrivning och belopp är giltiga
+    if (!description || isNaN(amount)) {
+    alert("Fyll i både beskrivning och ett giltigt belopp.");
+    return;
+    }
     
     // skapa ett objekt för transaktionen
-    const transaction = {description, amount, type};
-    
+    const transaction = { description, amount, type };
+
     // lägg till transaktionen i rätt array beroende på typ
     if (type === "income") {
         incomes.push(transaction); // lägg till i income array
@@ -54,32 +60,33 @@ function addTransaction(type) {
 // ========================================
 
 function renderTransaction() {
-    incomeList.innerHTML = ""; // rensa inkomster listan
-    expenseList.innerHTML = ""; // rensa utgifter listan
-    transactionList.innerHTML = ""; // rensa transaktionslistan
+    // rensa listorna innan vi lägger till nya transaktioner
+    incomeList.innerHTML = "";
+    expenseList.innerHTML = "";
+    transactionList.innerHTML = "";
     
     // lägg till inkomster i listan
-    incomes.forEach(item => {
+    for (let income of incomes) {
         const li = document.createElement("li"); // skapa ett nytt list element
-        li.textContent = `${item.description}: ${item.amount} kr`;
+        li.textContent = `${income.description}: ${income.amount} kr`;
         incomeList.appendChild(li); // lägg till list elementet i income listan
         
         const liTotal = document.createElement("li"); // skapa ett nytt list element
-        liTotal.textContent = `${item.description}: ${item.amount} kr [Inkomst]`;
+        liTotal.textContent = `${income.description}: ${income.amount} kr [Inkomst]`;
         transactionList.appendChild(liTotal); // lägg till list elementet i transaktionslistan
-    });
+    }
     
     // lägg till utgifter i listan
-    expenses.forEach(item => {
+    for (let expense of expenses) {
         const li = document.createElement("li"); // skapa ett nytt list element
-        li.textContent = `${item.description}: ${item.amount} kr`;
+        li.textContent = `${expense.description}: ${expense.amount} kr`;
         expenseList.appendChild(li); // lägg till list elementet i expense listan
         
         const liTotal = document.createElement("li"); // skapa ett nytt list element
-        liTotal.textContent = `${item.description}: ${item.amount} kr [Utgift]`;
+        liTotal.textContent = `${expense.description}: ${expense.amount} kr [Utgift]`;
         transactionList.appendChild(liTotal); // lägg till list elementet i transaktionslistan
-    });
-    
+    }
+
     updateBalance(); // uppdatera saldo
 }
 // =========================================
