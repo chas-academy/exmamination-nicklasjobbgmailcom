@@ -16,6 +16,8 @@ const incomeList = document.getElementById("incomeList"); // lista för inkomste
 const expenseList = document.getElementById("expenseList"); // lista för utgifter
 const balanceDisplay = document.getElementById("balance"); // element för saldo
 
+const transactionList = document.getElementById("transactionList"); // lista för transaktioner
+
 // knappar
 const incomeBtn = document.getElementById("incomeBtn"); // knapp för inkomst
 const expenseBtn = document.getElementById("expenseBtn"); // knapp för utgift
@@ -58,6 +60,7 @@ function addTransaction(type) {
     
     clearTransaction();
     updateBalance();
+    updateTransactionList();
 }
 
 // ========================================
@@ -84,12 +87,26 @@ function clearTransaction() {
     }
 
 }
+
+function updateTransactionList() {
+    if (!transactionList) return; // kolla om elementet finns
+    transactionList.innerHTML = ""; // rensa transaktionslistan
+
+    const allTransactions = [...incomes, ...expenses]; // kombinera inkomster och utgifter
+
+    for (const trans of allTransactions) {
+        const li = document.createElement("li"); // skapa ett nytt list element
+        li.textContent = `${trans.description} - ${trans.amount} kr (${trans.type === "income" ? "Inkomst" : "Utgift"})`;
+        transactionList.appendChild(li); // lägg till list elementet i transaktionslistan
+    }
+}
+
 // =========================================
 // RÄKNA UT OCH UPPDATERA SALDO
 // =========================================
 
 function updateBalance() {
-    if (!balanceDisplay) return;
+    if (!balanceDisplay) return; // kolla om elementet finns
     const totalIncome = incomes.reduce((sum, item) => sum + item.amount, 0); // summera inkomster
     const totalExpenses = expenses.reduce((sum, item) => sum + item.amount, 0); // summera utgifter
     const balance = totalIncome - totalExpenses; // räkna ut saldo
