@@ -3,8 +3,8 @@
 // ARRAYER FÖR TRANSAKTIONER
 // =============================================
 
-const incomes = []; //Inkomster
-const expenses = []; //Utgifter
+let incomes = []; //Inkomster
+let expenses = []; //Utgifter
 
 // =============================================
 // ELEMENT FRÅN HTML
@@ -12,13 +12,14 @@ const expenses = []; //Utgifter
 
 const descInput = document.getElementById("desc"); // inputfält för beskrivning
 const amountInput = document.getElementById("amount"); // inputfält för belopp
-const incomeBtn = document.getElementById("incomeBtn"); // knapp för inkomst
-const expenseBtn = document.getElementById("expenseBtn"); // knapp för utgift
-
 const incomeList = document.getElementById("incomeList"); // lista för inkomster
 const expenseList = document.getElementById("expenseList"); // lista för utgifter
 const transactionList = document.getElementById("transactionList"); // lista för transaktioner
 const balanceDisplay = document.getElementById("balance"); // element för saldo
+
+// knappar
+const incomeBtn = document.getElementById("incomeBtn"); // knapp för inkomst
+const expenseBtn = document.getElementById("expenseBtn"); // knapp för utgift
 
 // =======================================================
 // FUNKTIONER FÖR ATT LÄGGA TILL TRANSAKTIONER
