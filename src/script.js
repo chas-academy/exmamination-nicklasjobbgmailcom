@@ -14,7 +14,6 @@ const descInput = document.getElementById("desc"); // inputfält för beskrivnin
 const amountInput = document.getElementById("amount"); // inputfält för belopp
 const incomeList = document.getElementById("incomeList"); // lista för inkomster
 const expenseList = document.getElementById("expenseList"); // lista för utgifter
-const transactionList = document.getElementById("transactionList"); // lista för transaktioner
 const balanceDisplay = document.getElementById("balance"); // element för saldo
 
 // knappar
@@ -26,21 +25,21 @@ const expenseBtn = document.getElementById("expenseBtn"); // knapp för utgift
 // =======================================================
 
 function addTransaction(type) {
-    const description = descInput.value.trim(); // hämta beskrivning
-    const amount = parseFloat(amountInput.value); // hämta belopp
+    const description = descInput.value; // hämta beskrivning
+    const amount = Number(amountInput.value); // hämta belopp
+
+    // skapa ett objekt för transaktionen
+    const transaction = { 
+        description: description, 
+        amount: amount,
+        type: type
+    };
 
     // kontrollera om beskrivning och belopp är giltiga
     if (!description || isNaN(amount)) {
     alert("Fyll i både beskrivning och ett giltigt belopp.");
     return;
     }
-    
-    // skapa ett objekt för transaktionen
-    const transaction = { 
-        description, 
-        amount, 
-        type 
-    };
 
     // lägg till transaktionen i rätt array beroende på typ
     if (type === "income") {
@@ -57,43 +56,32 @@ function addTransaction(type) {
     amountInput.value = ""; // rensa belopp
     
     
-    renderTransaction();
+    clearTransaction();
+    updateBalance();
 }
 
 // ========================================
 // LÄGGA TILL EN TRANSAKTION I LISTAN
 // ========================================
 
-function renderTransaction() {
-    if (!incomeList || !expenseList || !transactionList) return; // avsluta om elementen inte finns
+function clearTransaction() {
 
-    transactionList.innerHTML = ""; // rensa transaction listan
     incomeList.innerHTML = ""; // rensa income listan
     expenseList.innerHTML = ""; // rensa expense listan
-
+    
     // lägg till inkomster i listan
-    for (let income of incomes) {
+    for (const income of incomes) {
         const li = document.createElement("li"); // skapa ett nytt list element
-        li.textContent = `${income.description}: ${income.amount} kr (Inkomst)`;
+        li.textContent = `${income.description} - ${income.amount} kr (Inkomst)`;
         incomeList.appendChild(li); // lägg till list elementet i income listan
-        
-        const liTotal = document.createElement("li"); // skapa ett nytt list element
-        liTotal.textContent = `${income.description}: ${income.amount} kr (Inkomst)`;
-        transactionList.appendChild(liTotal); // lägg till list elementet i transaktionslistan
     }
     
-        // lägg till utgifter i listan
-    for (let expense of expenses) {
+    // lägg till utgifter i listan
+    for (const expense of expenses) {
         const li = document.createElement("li"); // skapa ett nytt list element
-        li.textContent = `${expense.description}: ${expense.amount} kr (Utgift)`;
+        li.textContent = `${expense.description} - ${expense.amount} kr (Utgift)`;
         expenseList.appendChild(li); // lägg till list elementet i expense listan
-        
-        const liTotal = document.createElement("li"); // skapa ett nytt list element
-        liTotal.textContent = `${expense.description}: ${expense.amount} kr (Utgift)`;
-        transactionList.appendChild(liTotal); // lägg till list elementet i transaktionslistan
     }
-
-    updateBalance(); // uppdatera saldo
 
 }
 // =========================================
